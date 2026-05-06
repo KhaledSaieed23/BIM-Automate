@@ -1,0 +1,1789 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXORA — Automate BIM. Accelerate Construction.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#06080f;color:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(circle,rgba(255,255,255,.055) 1px,transparent 1px);background-size:36px 36px;mask-image:radial-gradient(ellipse 100% 100% at 50% 0%,black 0%,transparent 85%)}
+
+/* ── Aurora — single faint blue, very subtle ── */
+.aurora{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 70% 50% at 50% -10%, rgba(37,99,235,.09) 0%,transparent 65%);
+}
+
+/* ── All content above aurora ── */
+body>*:not(.aurora){position:relative;z-index:1}
+
+/* ── Headings — Inter, tight ── */
+h1,h2,h3,h4{font-family:'Inter',sans-serif;letter-spacing:-.02em}
+
+/* ── Accent text — subtle blue only ── */
+.tg{color:#60a5fa;-webkit-text-fill-color:#60a5fa}
+.tgb{color:#60a5fa;-webkit-text-fill-color:#60a5fa}
+.tgc{color:#34d399;-webkit-text-fill-color:#34d399}
+
+/* ── Glass ── */
+.glass{background:rgba(255,255,255,.03)}
+
+/* ── Card — flat, single thin border ── */
+.card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:10px;transition:border-color .2s,background .2s}
+.card:hover{background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.13)}
+
+/* ── Featured card ── */
+.fcard{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px}
+.fcard:hover{border-color:rgba(59,130,246,.3)}
+
+/* ── Chip ── */
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:4px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.4);font-size:.67rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.cdot{width:5px;height:5px;border-radius:50%;background:#3b82f6;animation:blink 2s ease-in-out infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* ── Pill ── */
+.pill{padding:3px 10px;border-radius:4px;background:transparent;border:1px solid rgba(255,255,255,.08);font-size:.7rem;font-weight:500;color:rgba(255,255,255,.3);white-space:nowrap;transition:all .15s}
+.pill:hover{border-color:rgba(59,130,246,.3);color:#93c5fd}
+
+/* ── Section label ── */
+.slabel{display:inline-flex;align-items:center;gap:10px;font-size:.67rem;font-weight:600;color:rgba(255,255,255,.2);letter-spacing:.14em;text-transform:uppercase}
+.slabel::before,.slabel::after{content:'';display:block;width:18px;height:1px;background:rgba(255,255,255,.13);flex-shrink:0}
+
+/* ── Stat divider ── */
+.sdv{width:1px;background:rgba(255,255,255,.06);align-self:stretch}
+
+/* ── Nav ── */
+#nav{position:fixed!important;top:0;left:0;right:0;border-bottom:1px solid transparent;transition:background .3s,border-color .3s;z-index:50}
+#nav.on{background:rgba(6,8,15,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom-color:rgba(255,255,255,.05)}
+
+/* ── Perspective grid ── */
+.pgrid{position:absolute;inset:0;pointer-events:none;opacity:.03;background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,black 0%,transparent 100%)}
+
+/* ── Hero top glow ── */
+.hglow{position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(37,99,235,.13) 0%,rgba(99,102,241,.06) 45%,transparent 72%);pointer-events:none;filter:blur(48px)}
+
+/* ── Marquee ── */
+@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.mq-track{display:flex;animation:mq 32s linear infinite;width:max-content}
+.mq-wrap:hover .mq-track{animation-play-state:paused}
+
+/* ── Nav scrollspy ── */
+.nav-lnk{position:relative;transition:color .2s}
+.nav-lnk.nav-active{color:rgba(255,255,255,.9)!important}
+.nav-lnk.nav-active::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:#3b82f6;border-radius:999px}
+
+/* ── Suite tabs ── */
+.stab-bar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border:1px solid rgba(255,255,255,.06);border-radius:8px;background:transparent}
+.stab-bar::-webkit-scrollbar{display:none}
+.tab-btn{flex:0 0 auto;padding:.8rem 1rem;font-size:.75rem;font-weight:500;color:rgba(255,255,255,.28);background:transparent;border:none;cursor:pointer;transition:all .2s;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:4px;border-right:1px solid rgba(255,255,255,.06)}
+.tab-btn:last-child{border-right:none}
+.tab-btn .tbn{font-size:.61rem;color:rgba(255,255,255,.15);font-weight:500;transition:color .2s}
+.tab-btn.active{color:#fff;background:rgba(255,255,255,.04)}
+.tab-btn.active .tbn{color:rgba(255,255,255,.35)}
+@media(min-width:768px){.stab-bar{overflow-x:visible}.tab-btn{flex:1 1 0}}
+
+/* ── Suite sections ── */
+.suite-section{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;padding-top:2.5rem;padding-bottom:3.5rem;border-bottom:1px solid rgba(255,255,255,.04);scroll-margin-top:150px}
+.suite-section:last-child{border-bottom:none;padding-bottom:0}
+@media(max-width:767px){.suite-section{grid-template-columns:1fr}}
+.sticky-tabs{border-radius:8px;margin-bottom:2rem}
+
+/* ── Tool link ── */
+.tool-link{display:flex;align-items:center;gap:14px;padding:.95rem 1rem;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.06);transition:all .18s;cursor:pointer;text-decoration:none;color:inherit}
+.tool-link:hover{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.12);transform:translateX(2px)}
+.tool-link:hover .tl-arr{opacity:1;transform:translateX(2px)}
+.tl-arr{opacity:0;transition:all .18s;color:rgba(255,255,255,.4);font-size:.8rem;margin-left:auto;flex-shrink:0}
+.wip{font-size:.57rem;padding:2px 7px;border-radius:4px;background:transparent;border:1px solid rgba(234,179,8,.2);color:rgba(234,179,8,.55);font-weight:600;letter-spacing:.05em}
+
+/* ── Power BI Dashboard ── */
+.pbi-dash{background:rgba(6,8,15,.8);border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden}
+.pbi-topbar{background:transparent;border-bottom:1px solid rgba(255,255,255,.05);padding:.65rem 1.4rem;display:flex;justify-content:space-between;align-items:center}
+.pbi-metric{background:transparent;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1.4rem 1.2rem;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.pbi-bar-bg{width:100%;height:6px;background:rgba(255,255,255,.05);border-radius:999px;overflow:hidden}
+.pbi-bar-fill{height:100%;border-radius:999px;width:0%;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.pbi-row{display:flex;align-items:center;gap:12px;padding:.55rem 0}
+.pbi-row-label{font-size:.75rem;font-weight:500;color:rgba(255,255,255,.4);white-space:nowrap;min-width:170px}
+
+/* ── Journey step ── */
+.jnum{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:transparent;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.5);flex-shrink:0}
+
+/* ── Impact number ── */
+.inum{font-size:clamp(2.6rem,5.5vw,4.5rem);font-weight:800;line-height:1;color:#fff}
+
+/* ── Snum ── */
+.snum{font-size:.65rem;font-weight:700;color:#3b82f6;letter-spacing:.12em}
+
+/* ── Lab card ── */
+.lab-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:10px}
+
+/* ── Testimonial ── */
+.tcard{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px}
+
+/* ── Reveal ── */
+.r{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
+.r.on{opacity:1;transform:none}
+
+/* ── Arrow ── */
+.arr{opacity:.15;transition:opacity .22s,transform .22s}
+.card:hover .arr{opacity:.65;transform:translate(3px,-3px)}
+
+/* ── Mobile ── */
+#mob{display:none}
+#mob.open{display:flex}
+
+/* ── Chatbot ── */
+#cpanel{display:none}
+#cpanel.open{display:flex;flex-direction:column}
+
+/* ── Text wrap balance (no orphan words) ── */
+h1,h2,h3,h4,p,.tl-desc{text-wrap:balance}
+
+/* ── Flip card ── */
+.flip-scene{perspective:900px;cursor:pointer;position:relative;z-index:1}
+.flip-scene:hover{z-index:10}
+.flip-scene.locked{z-index:10}
+.flip-card{position:relative;width:100%;height:240px;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.4,0,.2,1)}
+.flip-scene:not(.locked):hover .flip-card,.flip-scene:not(.locked):focus .flip-card{transform:rotateY(180deg)}
+.flip-scene.locked .flip-card{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:10px;overflow:hidden}
+.flip-back{transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:flex-start;gap:.7rem;padding:1.2rem;background:rgba(6,12,28,.97);border:1px solid rgba(59,130,246,.22)}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:#03040a}
+::-webkit-scrollbar-thumb{background:rgba(59,130,246,.3);border-radius:999px}
+
+/* ── Hero entrance animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.ha0{animation:fadeIn  .6s .05s both cubic-bezier(.22,1,.36,1)}
+.ha1{animation:fadeUp  .7s .2s  both cubic-bezier(.22,1,.36,1)}
+.ha2{animation:fadeUp  .7s .38s both cubic-bezier(.22,1,.36,1)}
+.ha3{animation:fadeUp  .7s .52s both cubic-bezier(.22,1,.36,1)}
+.ha4{animation:fadeUp  .7s .66s both cubic-bezier(.22,1,.36,1)}
+
+/* ── Hero orbs ── */
+@keyframes orbDrift{0%,100%{transform:translate(0,0)}40%{transform:translate(18px,-22px)}70%{transform:translate(-12px,14px)}}
+.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px)}
+.orb1{width:650px;height:650px;background:radial-gradient(ellipse,rgba(37,99,235,.2) 0%,transparent 68%);top:-15%;left:-5%;animation:orbDrift 14s ease-in-out infinite}
+.orb2{width:420px;height:420px;background:radial-gradient(ellipse,rgba(139,92,246,.14) 0%,transparent 68%);top:15%;right:-2%;animation:orbDrift 18s ease-in-out infinite reverse}
+.orb3{width:320px;height:320px;background:radial-gradient(ellipse,rgba(6,182,212,.1) 0%,transparent 68%);bottom:8%;left:28%;animation:orbDrift 11s ease-in-out infinite 3s}
+</style>
+</head>
+<body>
+
+<!-- Aurora — static gradient background -->
+<div class="aurora"></div>
+
+
+<!-- ════════  NAV  ════════ -->
+<header id="nav" class="fixed top-0 inset-x-0">
+<div class="max-w-7xl mx-auto px-6 h-[60px] flex items-center justify-between">
+
+  <a href="#" class="flex items-center gap-2.5 font-black text-[1rem] tracking-tight">
+    <svg width="28" height="28" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="41.5" y="5"  width="7"  height="7"  rx="1.5" fill="#93c5fd" opacity="0.4"  transform="rotate(0   45 45)"/>
+      <rect x="41"   y="5"  width="8"  height="8"  rx="2"   fill="#60a5fa" opacity="0.55" transform="rotate(30  45 45)"/>
+      <rect x="40.5" y="4"  width="9"  height="9"  rx="2"   fill="#3b82f6" opacity="0.7"  transform="rotate(60  45 45)"/>
+      <rect x="40"   y="4"  width="10" height="10" rx="2.5" fill="#2563eb" opacity="0.85" transform="rotate(90  45 45)"/>
+      <rect x="40"   y="3"  width="10" height="12" rx="2.5" fill="#2563eb"                transform="rotate(120 45 45)"/>
+      <rect x="40"   y="2"  width="10" height="14" rx="3"   fill="#1d4ed8"                transform="rotate(150 45 45)"/>
+      <rect x="40"   y="2"  width="10" height="14" rx="3"   fill="#1d4ed8"                transform="rotate(180 45 45)"/>
+      <rect x="40"   y="3"  width="10" height="12" rx="2.5" fill="#2563eb"                transform="rotate(210 45 45)"/>
+      <rect x="40"   y="4"  width="10" height="10" rx="2.5" fill="#2563eb" opacity="0.85" transform="rotate(240 45 45)"/>
+      <rect x="40.5" y="4"  width="9"  height="9"  rx="2"   fill="#3b82f6" opacity="0.6"  transform="rotate(270 45 45)"/>
+      <rect x="41"   y="5"  width="8"  height="8"  rx="2"   fill="#60a5fa" opacity="0.4"  transform="rotate(300 45 45)"/>
+      <rect x="41.5" y="5"  width="7"  height="7"  rx="1.5" fill="#93c5fd" opacity="0.25" transform="rotate(330 45 45)"/>
+      <circle cx="45" cy="45" r="5" fill="#2563eb"/>
+    </svg>
+    <span class="font-black text-white tracking-tight">NEXORA</span>
+  </a>
+
+  <nav class="hidden md:flex items-center gap-7 text-[.82rem] text-white/38 font-medium">
+    <a href="#nexora"       data-nav="nexora"       class="nav-lnk hover:text-white/85 transition-colors">NEXORA</a>
+    <a href="#suite"        data-nav="suite"        class="nav-lnk hover:text-white/85 transition-colors">Suite</a>
+    <a href="#services"    data-nav="services"    class="nav-lnk hover:text-white/85 transition-colors">Services</a>
+    <a href="#results"     data-nav="results"     class="nav-lnk hover:text-white/85 transition-colors">Results</a>
+    <a href="#labs"        data-nav="labs"        class="nav-lnk hover:text-white/85 transition-colors">R&amp;D</a>
+    <a href="#engineering" data-nav="engineering" class="nav-lnk hover:text-white/85 transition-colors">Engineering</a>
+    <a href="#about"       data-nav="about"       class="nav-lnk hover:text-white/85 transition-colors">About</a>
+  </nav>
+
+  <div class="flex items-center gap-3">
+    <a href="#social-links" class="hidden md:inline text-[.82rem] text-white/32 hover:text-white/70 transition-colors font-medium">Contact</a>
+    <a href="#contact" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 px-5 py-2.5 rounded-full text-[.8rem] font-semibold transition-all hover:shadow-lg hover:shadow-blue-600/28">
+      Book a Demo
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+    </a>
+    <button id="mbtn" class="md:hidden p-2 text-white/32 hover:text-white">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+
+</div>
+</header>
+
+<div id="mob" class="fixed inset-0 z-40 bg-[#03040a]/97 flex-col items-center justify-center gap-7 text-xl font-semibold">
+  <a href="#nexora"       onclick="cm()" class="text-white/45 hover:text-white transition">NEXORA</a>
+  <a href="#suite"        onclick="cm()" class="text-white/45 hover:text-white transition">Suite</a>
+  <a href="#services"    onclick="cm()" class="text-white/45 hover:text-white transition">Services</a>
+  <a href="#results"     onclick="cm()" class="text-white/45 hover:text-white transition">Results</a>
+  <a href="#labs"        onclick="cm()" class="text-white/45 hover:text-white transition">R&amp;D</a>
+  <a href="#engineering" onclick="cm()" class="text-white/45 hover:text-white transition">Engineering</a>
+  <a href="#about"       onclick="cm()" class="text-white/45 hover:text-white transition">About</a>
+  <a href="#social-links" onclick="cm()" class="bg-blue-600 px-8 py-3 rounded-full text-base hover:bg-blue-500 transition mt-2">Contact →</a>
+</div>
+
+
+<!-- ════════  HERO  ════════ -->
+<section id="nexora" class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden">
+
+  <div class="hglow"></div>
+  <div class="pgrid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <!-- Canvas particle network — inside hero only -->
+  <canvas id="hc" class="absolute inset-0 w-full h-full pointer-events-none" style="z-index:1;opacity:.4"></canvas>
+
+  <div class="relative pt-20" style="z-index:2;max-width:54rem">
+
+    <div class="chip mb-7 mx-auto ha0" style="width:fit-content">
+      <span class="cdot"></span>
+      BIM Automation Platform | Digital Workflows | Design to Delivery
+    </div>
+
+    <h1 class="font-black mb-5 tracking-tight leading-[1.12] ha1" style="font-size:clamp(1.7rem,3.4vw,3.2rem)">
+      Stop repeating work.<br><span class="tg">Start delivering digitally.</span>
+    </h1>
+
+    <p class="max-w-[50rem] mx-auto text-[.97rem] text-white/42 mb-11 leading-[1.9] ha2" style="font-weight:400;font-family:'Inter',sans-serif">
+      NEXORA is a BIM automation platform that streamlines the full project workflow — from intelligent Revit modeling and automated shop drawings, to data management, quantity extraction, and audit tools. Built for BIM engineers, coordinators, and project managers across all structural disciplines.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14 ha3">
+      <a href="#contact" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 px-9 py-4 rounded-xl font-bold text-[.88rem] transition-all hover:shadow-xl hover:shadow-blue-600/28 hover:-translate-y-0.5">
+        Request Access
+      </a>
+      <a href="#suite" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 glass border border-white/[0.08] px-9 py-4 rounded-xl font-bold text-[.88rem] hover:bg-white/[0.04] transition-all hover:-translate-y-0.5 text-white/60">
+        Explore Platform
+        <svg class="w-3.5 h-3.5 text-white/28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="glass border border-white/[0.06] rounded-2xl overflow-hidden w-full max-w-[560px] mx-auto ha4">
+      <div class="grid grid-cols-2 sm:grid-cols-4">
+      <div class="px-5 py-4 text-center" style="border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)">
+        <div class="text-[1.25rem] font-black tgb mb-0.5">95%</div>
+        <div class="text-white/25 text-[.52rem] uppercase tracking-[.04em] font-semibold whitespace-nowrap">Modeling Time Saved</div>
+      </div>
+      <div class="px-5 py-4 text-center" style="border-bottom:1px solid rgba(255,255,255,.06)">
+        <div class="text-[1.25rem] font-black tgb mb-0.5">Batch</div>
+        <div class="text-white/25 text-[.52rem] uppercase tracking-[.04em] font-semibold whitespace-nowrap">All Elements at Once</div>
+      </div>
+      <div class="px-5 py-4 text-center sm:border-t-0" style="border-right:1px solid rgba(255,255,255,.06)">
+        <div class="text-[1.25rem] font-black tgb mb-0.5">Zero</div>
+        <div class="text-white/25 text-[.52rem] uppercase tracking-[.04em] font-semibold whitespace-nowrap">Manual Placement</div>
+      </div>
+      <div class="px-5 py-4 text-center">
+        <div class="text-[1.25rem] font-black tgb mb-0.5">21+</div>
+        <div class="text-white/25 text-[.52rem] uppercase tracking-[.04em] font-semibold whitespace-nowrap">Modules Shipped</div>
+      </div>
+      </div><!-- /grid -->
+    </div><!-- /stats bar -->
+
+  </div>
+  <div class="absolute bottom-7 left-1/2 -translate-x-1/2 pointer-events-none" style="z-index:2">
+    <div class="w-px h-11 bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
+  </div>
+</section>
+
+
+<!-- ════════  MARQUEE  ════════ -->
+<div class="border-y border-white/[0.05] py-4 overflow-hidden mq-wrap select-none">
+  <div class="mq-track">
+    <div class="flex items-center gap-6 px-6">
+      <span class="pill">Revit API</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Dynamo BIM</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">C# / .NET</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Python</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Navisworks</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Forge / APS</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Power BI</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Excel Automation</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">LLM / AI</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">IFC / OpenBIM</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">AutoCAD</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">WPF UI</span><span class="text-white/[0.06]">·</span>
+    </div>
+    <div class="flex items-center gap-6 px-6" aria-hidden="true">
+      <span class="pill">Revit API</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Dynamo BIM</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">C# / .NET</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Python</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Navisworks</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Forge / APS</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Power BI</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">Excel Automation</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">LLM / AI</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">IFC / OpenBIM</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">AutoCAD</span><span class="text-white/[0.06]">·</span>
+      <span class="pill">WPF UI</span><span class="text-white/[0.06]">·</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════  VALUE PROPS  ════════ -->
+<section class="py-20 px-6 border-b border-white/[0.05]">
+<div class="max-w-7xl mx-auto">
+  <div class="text-center mb-12 r">
+    <div class="slabel mb-3" style="justify-content:center">What It Covers</div>
+    <h2 class="text-[clamp(1.5rem,2.8vw,2.2rem)] font-black tracking-tight mt-3">One platform across <span class="tg">the full BIM workflow.</span></h2>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+    <div class="card p-6 r text-center">
+      <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/12 flex items-center justify-center mx-auto mb-4"><svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+      <div class="font-bold text-[.88rem] mb-1.5">CAD → BIM</div>
+      <p class="text-white/25 text-xs leading-relaxed">Convert drawings into Revit elements without manual placement</p>
+    </div>
+    <div class="card p-6 r text-center" style="transition-delay:.04s">
+      <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/12 flex items-center justify-center mx-auto mb-4"><svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+      <div class="font-bold text-[.88rem] mb-1.5">Drawings</div>
+      <p class="text-white/25 text-xs leading-relaxed">Generate shop drawings as batch operations from model data</p>
+    </div>
+    <div class="card p-6 r text-center" style="transition-delay:.08s">
+      <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/12 flex items-center justify-center mx-auto mb-4"><svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div>
+      <div class="font-bold text-[.88rem] mb-1.5">Data</div>
+      <p class="text-white/25 text-xs leading-relaxed">Edit parameters, rename elements, and manage sheets in bulk</p>
+    </div>
+    <div class="card p-6 r text-center" style="transition-delay:.12s">
+      <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/12 flex items-center justify-center mx-auto mb-4"><svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg></div>
+      <div class="font-bold text-[.88rem] mb-1.5">Validation</div>
+      <p class="text-white/25 text-xs leading-relaxed">Run automated checks to find missing data and documentation gaps</p>
+    </div>
+    <div class="card p-6 r text-center" style="transition-delay:.16s">
+      <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/12 flex items-center justify-center mx-auto mb-4"><svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg></div>
+      <div class="font-bold text-[.88rem] mb-1.5">Quantities</div>
+      <p class="text-white/25 text-xs leading-relaxed">Extract material takeoffs directly from model data</p>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<!-- ════════  NEXORA AUTOMATION SUITE  ════════ -->
+<section id="suite" class="py-28 px-6 border-t border-white/[0.05]">
+<div class="max-w-7xl mx-auto">
+
+  <!-- Header -->
+  <div class="text-center mb-10 r">
+    <div class="slabel mb-3" style="justify-content:center">Platform</div>
+    <h2 class="text-[clamp(1.6rem,3.2vw,2.6rem)] font-black tracking-tight mt-3">
+      NEXORA <span class="tg">Automation Suite</span>
+    </h2>
+    <p class="text-white/30 text-[.85rem] mt-3 max-w-xl mx-auto">A structured set of automation modules for Revit — each one targets a specific part of the BIM workflow and removes the manual work from it.</p>
+  </div>
+
+  <!-- Sticky scrollspy tab bar -->
+  <div id="suite-tabs" class="stab-bar" style="grid-template-columns:repeat(6,1fr);margin-bottom:0">
+    <button class="tab-btn active" data-tab="modeling" onclick="scrollToSec('modeling',this)">
+      <span>Revit Automation Modeling</span><span class="tbn">4 modules</span>
+    </button>
+    <button class="tab-btn" data-tab="shopdrawing" onclick="scrollToSec('shopdrawing',this)">
+      <span>Shop Drawing Workflow</span><span class="tbn">6 modules</span>
+    </button>
+    <button class="tab-btn" data-tab="data" onclick="scrollToSec('data',this)">
+      <span>Data Management</span><span class="tbn">3 modules</span>
+    </button>
+    <button class="tab-btn" data-tab="audit" onclick="scrollToSec('audit',this)">
+      <span>Model Auditing</span><span class="tbn">2 modules</span>
+    </button>
+    <button class="tab-btn" data-tab="selection" onclick="scrollToSec('selection',this)">
+      <span>Element Selection</span><span class="tbn">3 modules</span>
+    </button>
+    <button class="tab-btn" data-tab="qty" onclick="scrollToSec('qty',this)">
+      <span>Quantity & Optimization</span><span class="tbn">2 modules</span>
+    </button>
+  </div>
+
+  <!-- All 6 sections always visible — stacked vertically -->
+  <div style="margin-top:10px">
+
+    <!-- ── 1. Revit Modeling Automation ── -->
+    <div id="sec-modeling" class="suite-section r">
+      <div class="fcard p-8 flex flex-col gap-5">
+        <div>
+          <div class="chip mb-4" style="background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.25);color:#93c5fd">Revit Automation Modeling</div>
+          <h3 class="text-[1.15rem] font-bold mb-3 mt-2">From CAD input to Revit output. No manual steps.</h3>
+          <p class="text-white/32 text-[.84rem] leading-relaxed mb-6">Reads CAD geometry and places structural elements as parametric Revit objects — footings, columns, beams. Correct coordinates, correct sizing, no manual positioning required.</p>
+          <div class="flex gap-5 mb-6">
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">95%</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Less modeling time</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Zero</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Manual element placement</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">10×</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Faster per operation</div></div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-1.5"><span class="pill">Revit API</span><span class="pill">C#</span><span class="pill">CAD Import</span><span class="pill">Parametric Modeling</span></div>
+      </div>
+      <div class="flex flex-col gap-2.5">
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_ai-visual-studio-developed-my-new-revit-activity-7410273418748755968-6CnV?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/15 flex items-center justify-center text-blue-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v8m-3.5 0h7M5 15h14M3 20h18"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Isolated Footing From CAD</div><div class="text-white/25 text-xs mt-0.5">Place isolated footings from CAD geometry with correct positioning and sizing — no manual input.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_ai-visual-studio-developed-my-new-revit-activity-7405199811341438976-3RUy?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/15 flex items-center justify-center text-blue-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 4.5h12v15H6z M9 4.5v15 M15 4.5v15"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Rectangular Column From CAD</div><div class="text-white/25 text-xs mt-0.5">Place rectangular Revit columns at exact CAD coordinates with full parametric type control.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_ai-visual-studio-developed-my-new-revit-activity-7405199811341438976-3RUy?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/15 flex items-center justify-center text-blue-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Circular Column From CAD</div><div class="text-white/25 text-xs mt-0.5">Extract circular column radius from CAD and place matching Revit elements at correct positions.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="#" class="tool-link" style="opacity:.6;cursor:default;pointer-events:none">
+          <span class="w-9 h-9 rounded-lg bg-yellow-500/10 border border-yellow-500/15 flex items-center justify-center text-yellow-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 8h16M10 8v8M14 8v8M4 16h16M4 18h16"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem] flex items-center gap-2">Structural Framing From CAD <span class="wip">WIP</span></div><div class="text-white/25 text-xs mt-0.5">Place beam elements by reading section data from imported structural drawings.</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── 2. Shop Drawing Automation ── -->
+    <div id="sec-shopdrawing" class="suite-section r">
+      <div class="fcard p-8 flex flex-col gap-5">
+        <div>
+          <div class="chip mb-4" style="background:rgba(6,182,212,.08);border-color:rgba(6,182,212,.22);color:#67e8f9">Shop Drawing Automated Workflow</div>
+          <h3 class="text-[1.15rem] font-bold mb-3 mt-2">Drawing production without manual drafting.</h3>
+          <p class="text-white/32 text-[.84rem] leading-relaxed mb-6">Generates annotated sections, dimension sets, and drawing sheets from the model in a single run. The same output structure every time — no manual drafting, no inconsistencies between drawings.</p>
+          <div class="flex gap-5 mb-6">
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">90%</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Faster drawing production</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Batch</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Runs on entire model</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Zero</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Manual dimensioning</div></div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-1.5"><span class="pill">Revit API</span><span class="pill">Annotation Automation</span><span class="pill">Detailing Engine</span></div>
+      </div>
+      <div class="flex flex-col gap-2.5">
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_ai-visual-studio-developed-my-first-revit-activity-7382686410329329664-Yi_c?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/15 flex items-center justify-center text-cyan-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 12h16M4 7v10M20 7v10M7 4l-3 3M7 4h6M7 4v6M17 4l3 3M17 4h-6M17 4v6"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Columns & Walls Sections</div><div class="text-white/25 text-xs mt-0.5">Generate section views for all columns and walls across the project in one batch operation.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_ai-visual-studio-developed-my-new-revit-activity-7407736482788175872-vZ08?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/15 flex items-center justify-center text-cyan-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 12h16M4 7v10M20 7v10M8 4l-4 3M8 4h8M16 4l4 3M5 20h14"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Isolated Footings Sections</div><div class="text-white/25 text-xs mt-0.5">Generate section views for all isolated footings in the project with consistent cut depth and annotation.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_%D9%85%D8%B9%D8%A7%D8%AF%D9%84%D8%A9-%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D8%A7%D8%B2-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D9%8A%D9%85-ai-c-revit-activity-7451208280594513920-M0gW?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/15 flex items-center justify-center text-cyan-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h18M3 9l2 3-2 3M21 9l-2 3 2 3M8 5v2M12 5v2M16 5v2M8 17v2M12 17v2M16 17v2"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Columns & Axis Dimensions</div><div class="text-white/25 text-xs mt-0.5">Apply axis-referenced dimensions to all columns across the model in a single run.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_%D9%85%D8%B9%D8%A7%D8%AF%D9%84%D8%A9-%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D8%A7%D8%B2-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D9%8A%D9%85-ai-c-revit-activity-7456266256971612161-KgZS?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/15 flex items-center justify-center text-cyan-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 17h18M3 14l2 3-2 3M21 14l-2 3 2 3M6 4v8M12 4v8M18 4v8M6 4h12M6 12h12"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Footings & Axis Dimensions</div><div class="text-white/25 text-xs mt-0.5">Place complete dimension sets on footing layouts with consistent offsets and alignment.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_%D8%B5%D8%A8%D8%A7%D8%AD-%D8%A7%D9%84%D8%AE%D9%8A%D8%B1-%D8%A8%D8%AE%D8%B5%D9%88%D8%B5-%D8%A8%D9%88%D8%B3%D8%AA-%D8%A7%D9%84%D8%A3%D8%B3%D8%A8%D9%88%D8%B9-%D8%A7%D9%84%D9%84%D9%8A-%D9%81%D8%A7%D8%AA-activity-7433435835166846977-BER1?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/15 flex items-center justify-center text-cyan-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2zm7 4v6m-3-3h6"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Automatic Builder Work Openings</div><div class="text-white/25 text-xs mt-0.5">Automatically generate work openings in structural elements based on MEP clash detection logic.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="#" class="tool-link" style="opacity:.6;cursor:default;pointer-events:none">
+          <span class="w-9 h-9 rounded-lg bg-yellow-500/10 border border-yellow-500/15 flex items-center justify-center text-yellow-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7h16M4 9.5h16M4 14.5h16M4 17h16M9 9.5v5M15 9.5v5"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem] flex items-center gap-2">Beam Sections <span class="wip">WIP</span></div><div class="text-white/25 text-xs mt-0.5">Generate annotated beam section views directly from model geometry.</div></div>
+        </a>
+        <a href="#" class="tool-link" style="opacity:.6;cursor:default;pointer-events:none">
+          <span class="w-9 h-9 rounded-lg bg-yellow-500/10 border border-yellow-500/15 flex items-center justify-center text-yellow-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 6h.008v.008H6V6z"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem] flex items-center gap-2">Columns Classification <span class="wip">WIP</span></div><div class="text-white/25 text-xs mt-0.5">Classify columns by structural type using rule-based logic applied across the model.</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── 3. BIM Data Systems ── -->
+    <div id="sec-data" class="suite-section r">
+      <div class="fcard p-8 flex flex-col gap-5">
+        <div>
+          <div class="chip mb-4" style="background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.22);color:#c4b5fd">Data Management</div>
+          <h3 class="text-[1.15rem] font-bold mb-3 mt-2">Control all project data in one operation.</h3>
+          <p class="text-white/32 text-[.84rem] leading-relaxed mb-6">Rename elements, edit parameters, and organize sheets across the entire model at once. On large projects with thousands of elements, this replaces hours of manual editing with a single command.</p>
+          <div class="flex gap-5 mb-6">
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">80%</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Faster data operations</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Bulk</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Edit thousands at once</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Zero</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Manual renaming</div></div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-1.5"><span class="pill">Data Processing</span><span class="pill">Parameter Control</span><span class="pill">Batch Operations</span></div>
+      </div>
+      <div class="flex flex-col gap-2.5">
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_%D9%85%D8%B9%D8%A7%D8%AF%D9%84%D8%A9-%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D8%A7%D8%B2-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D9%8A%D9%85-ai-c-revit-activity-7438509229327429633-XWs6?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/15 flex items-center justify-center text-purple-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">BIM Bulk Rename</div><div class="text-white/25 text-xs mt-0.5">Rename selected elements using structured naming rules — applied across the full model in one step.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_%D9%85%D8%B9%D8%A7%D8%AF%D9%84%D8%A9-%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D8%A7%D8%B2-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D9%8A%D9%85-ai-c-revit-activity-7438509229327429633-XWs6?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/15 flex items-center justify-center text-purple-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Drawing List</div><div class="text-white/25 text-xs mt-0.5">Generate the project drawing list from an Excel file — creates and populates model sheets in one run.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_ai-visual-studio-developed-my-new-revit-activity-7415346678381309954-_RIj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/15 flex items-center justify-center text-purple-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Parameter Manager Pro</div><div class="text-white/25 text-xs mt-0.5">Read, write, and update parameters across thousands of Revit elements simultaneously.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── 4. Audit & Quality Control ── -->
+    <div id="sec-audit" class="suite-section r">
+      <div class="fcard p-8 flex flex-col gap-5">
+        <div>
+          <div class="chip mb-4" style="background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.2);color:#86efac">Model Auditing</div>
+          <h3 class="text-[1.15rem] font-bold mb-3 mt-2">Find model issues before they reach coordination.</h3>
+          <p class="text-white/32 text-[.84rem] leading-relaxed mb-6">Runs automated checks across the model for missing tags, empty parameters, and documentation gaps. Issues are flagged and reported — not discovered manually during review.</p>
+          <div class="flex gap-5 mb-6">
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Auto</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Full model diagnostics</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">100%</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Tag coverage detection</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">70%</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Reduction in QA time</div></div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-1.5"><span class="pill">Rule-Based Checks</span><span class="pill">Model Validation</span><span class="pill">QA Automation</span></div>
+      </div>
+      <div class="flex flex-col gap-2.5">
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_%D9%85%D8%B9%D8%A7%D8%AF%D9%84%D8%A9-%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D8%A7%D8%B2-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D9%8A%D9%85-ai-c-revit-activity-7438509229327429633-XWs6?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-green-500/10 border border-green-500/15 flex items-center justify-center text-green-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">BIM Audit Tool</div><div class="text-white/25 text-xs mt-0.5">Scan the entire model for data issues and export a structured report of all findings.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_ai-visual-studio-developed-my-new-revit-activity-7385253351136940032-947c?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-green-500/10 border border-green-500/15 flex items-center justify-center text-green-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Show Elements Without Tags</div><div class="text-white/25 text-xs mt-0.5">Isolate all untagged elements in the model so documentation gaps can be addressed immediately.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── 5. Smart Selection & Filtering ── -->
+    <div id="sec-selection" class="suite-section r">
+      <div class="fcard p-8 flex flex-col gap-5">
+        <div>
+          <div class="chip mb-4" style="background:rgba(251,191,36,.07);border-color:rgba(251,191,36,.22);color:#fde68a">Element Selection & Filtering</div>
+          <h3 class="text-[1.15rem] font-bold mb-3 mt-2">Select and isolate any element set, precisely.</h3>
+          <p class="text-white/32 text-[.84rem] leading-relaxed mb-6">Apply multi-criteria filters across element categories, parameter values, and linked files. On complex models where standard Revit selection falls short, this gives you exact control over what you're working with.</p>
+          <div class="flex gap-5 mb-6">
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Multi</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Criteria filtering</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Cross</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Linked model support</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Fast</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Element isolation</div></div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-1.5"><span class="pill">Advanced Filters</span><span class="pill">Linked Models</span><span class="pill">Smart Queries</span></div>
+      </div>
+      <div class="flex flex-col gap-2.5">
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_ai-visual-studio-developed-my-new-revit-activity-7389979476610166784-wRJe?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-yellow-500/10 border border-yellow-500/15 flex items-center justify-center text-yellow-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Advanced Filter</div><div class="text-white/25 text-xs mt-0.5">Select elements by combining category, parameter value, and geometry conditions in one filter.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_%D9%85%D8%B9%D8%A7%D8%AF%D9%84%D8%A9-%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D8%A7%D8%B2-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D9%8A%D9%85-ai-c-revit-activity-7453714496642224129-NQlW?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-yellow-500/10 border border-yellow-500/15 flex items-center justify-center text-yellow-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Linked Elements Browser</div><div class="text-white/25 text-xs mt-0.5">Browse, filter, and select elements inside linked Revit files without switching models.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_%D9%85%D8%B9%D8%A7%D8%AF%D9%84%D8%A9-%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D8%A7%D8%B2-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D9%8A%D9%85-ai-c-revit-activity-7435972520773640192-6zqO?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-yellow-500/10 border border-yellow-500/15 flex items-center justify-center text-yellow-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="10" cy="10" r="5.5" stroke="currentColor" stroke-width="1.5"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 7v6M7 10h6M20.5 20.5l-5-5"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Find Reinforcement</div><div class="text-white/25 text-xs mt-0.5">Locate and isolate reinforcement elements by type, host, or location across the model.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── 6. Quantity Intelligence ── -->
+    <div id="sec-qty" class="suite-section r">
+      <div class="fcard p-8 flex flex-col gap-5">
+        <div>
+          <div class="chip mb-4" style="background:rgba(251,146,60,.07);border-color:rgba(251,146,60,.2);color:#fdba74">Quantity & Optimization</div>
+          <h3 class="text-[1.15rem] font-bold mb-3 mt-2">Quantities pulled directly from the model.</h3>
+          <p class="text-white/32 text-[.84rem] leading-relaxed mb-6">Extracts material quantities from BIM data without manual schedules, and applies cut optimization logic to reduce material waste. No spreadsheets, no manual counting.</p>
+          <div class="flex gap-5 mb-6">
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Direct</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Extraction from model</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Less</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Material waste on site</div></div>
+            <div class="text-center"><div class="text-[1.4rem] font-black tgb leading-none">Zero</div><div class="text-white/25 text-[.6rem] mt-1 uppercase tracking-wide font-semibold">Manual takeoffs</div></div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-1.5"><span class="pill">Quantity Takeoff</span><span class="pill">Data Extraction</span><span class="pill">Optimization Logic</span></div>
+      </div>
+      <div class="flex flex-col gap-2.5">
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%AF%D9%84%D8%A9-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D9%8A%D9%85-ai-c-revit-activity-7428347387015798784-Qshx?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-orange-500/10 border border-orange-500/15 flex items-center justify-center text-orange-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Quick Quantity Survey</div><div class="text-white/25 text-xs mt-0.5">Extract material takeoffs from model elements in one operation — no manual schedule setup required.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/posts/khaled-saieed-b10a40247_ai-visual-studio-developed-my-new-revit-activity-7392516169246588928-01hf?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0zMjwBP6aAaWcJ-73ya1Gt9LkOPC5LkjM" target="_blank" class="tool-link">
+          <span class="w-9 h-9 rounded-lg bg-orange-500/10 border border-orange-500/15 flex items-center justify-center text-orange-400 flex-shrink-0">
+            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/></svg>
+          </span>
+          <div class="flex-1"><div class="font-semibold text-[.88rem]">Cut Optimization</div><div class="text-white/25 text-xs mt-0.5">Calculate optimal cut patterns for bars or profiles to minimize offcuts and reduce material waste.</div></div>
+          <span class="tl-arr">→</span>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /suite sections -->
+
+</div>
+</section>
+
+
+<!-- ════════  SERVICES  ════════ -->
+<section id="services" class="py-28 px-6 border-t border-white/[0.05]">
+<div class="max-w-7xl mx-auto">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-end mb-14 r">
+    <div>
+      <div class="slabel mb-3">Services</div>
+      <h2 class="text-[clamp(1.5rem,3vw,2.4rem)] font-black tracking-tight mt-3">Built for your workflow.<br><span class="tg">Not adapted from a template.</span></h2>
+    </div>
+    <p class="text-white/30 text-[.88rem] leading-relaxed">Every engagement starts with your actual process. We scope, build, and deliver automation that fits the way your team works — not a generic solution forced into your pipeline.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+    <div class="fcard p-8 r md:col-span-2 lg:col-span-1 lg:row-span-2" style="min-height:280px;display:flex;flex-direction:column;justify-content:space-between">
+      <div>
+        <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/14 flex items-center justify-center mb-5"><svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/></svg></div>
+        <h3 class="text-[1rem] font-bold mb-2.5">Revit Automation Systems</h3>
+        <p class="text-white/30 text-[.83rem] leading-relaxed mb-4">We design and build complete automation systems inside Revit — covering modeling, documentation, data, and quantities. Production-ready tools that run inside your team's existing workflow from day one.</p>
+        <div class="flex flex-wrap gap-1.5"><span class="pill">Revit API</span><span class="pill">C#</span><span class="pill">Dynamo</span></div>
+      </div>
+      <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-blue-400 text-[.82rem] font-bold hover:gap-2.5 transition-all">Get started →</a>
+    </div>
+
+    <div class="card p-7 r" style="transition-delay:.05s">
+      <div class="w-9 h-9 rounded-xl bg-purple-500/8 border border-purple-500/12 flex items-center justify-center mb-4"><svg class="w-4.5 h-4.5 text-purple-400" style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg></div>
+      <h3 class="text-[.95rem] font-bold mb-2">AI Integration for BIM</h3>
+      <p class="text-white/28 text-[.82rem] leading-relaxed mb-4">Connect AI models to your BIM data — automate classification, extract structured information, and make your workflows decision-aware instead of just data-heavy.</p>
+      <div class="flex flex-wrap gap-1.5"><span class="pill">LLM / AI</span><span class="pill">Python</span></div>
+    </div>
+
+    <div class="card p-7 r" style="transition-delay:.1s">
+      <div class="w-9 h-9 rounded-xl bg-cyan-500/8 border border-cyan-500/12 flex items-center justify-center mb-4"><svg class="w-4.5 h-4.5 text-cyan-400" style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div>
+      <h3 class="text-[.95rem] font-bold mb-2">Workflow Analysis & Redesign</h3>
+      <p class="text-white/28 text-[.82rem] leading-relaxed mb-4">Map your current BIM process step by step, identify exactly where time is lost, and replace those steps with targeted automation — not a general overhaul.</p>
+      <div class="flex flex-wrap gap-1.5"><span class="pill">Process Audit</span><span class="pill">Consulting</span></div>
+    </div>
+
+    <div class="card p-7 r" style="transition-delay:.05s">
+      <div class="w-9 h-9 rounded-xl bg-orange-500/8 border border-orange-500/12 flex items-center justify-center mb-4"><svg class="w-4.5 h-4.5 text-orange-400" style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg></div>
+      <h3 class="text-[.95rem] font-bold mb-2">Custom Tool Development</h3>
+      <p class="text-white/28 text-[.82rem] leading-relaxed mb-4">Scope a specific problem — we build the tool. From a single utility that saves an hour per day to a full system that replaces an entire manual process.</p>
+      <div class="flex flex-wrap gap-1.5"><span class="pill">.NET</span><span class="pill">Python</span></div>
+    </div>
+
+    <div class="card p-7 r" style="transition-delay:.1s">
+      <div class="w-9 h-9 rounded-xl bg-green-500/8 border border-green-500/12 flex items-center justify-center mb-4"><svg class="w-4.5 h-4.5 text-green-400" style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg></div>
+      <h3 class="text-[.95rem] font-bold mb-2">Team Adoption & Training</h3>
+      <p class="text-white/28 text-[.82rem] leading-relaxed mb-4">Automation only delivers value when your team actually uses it. We run structured sessions to onboard engineers, build internal competency, and define a practical automation roadmap.</p>
+      <div class="flex flex-wrap gap-1.5"><span class="pill">Workshops</span><span class="pill">Roadmap</span></div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+
+<!-- ════════  HOW WE WORK  ════════ -->
+<section class="py-24 px-6 border-t border-white/[0.05]">
+<div class="max-w-7xl mx-auto">
+  <div class="text-center mb-14 r">
+    <div class="slabel mb-3" style="justify-content:center">Process</div>
+    <h2 class="text-[clamp(1.5rem,2.8vw,2.2rem)] font-black tracking-tight mt-3">Every engagement follows <span class="tg">the same 7-step process.</span></h2>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-3 r">
+    <div class="card p-5 text-center"><div class="snum mb-3">01</div><div class="text-[.82rem] font-bold mb-1.5">Audit</div><p class="text-white/22 text-xs" style="white-space:nowrap">Workflow analysis</p></div>
+    <div class="card p-5 text-center"><div class="snum mb-3">02</div><div class="text-[.82rem] font-bold mb-1.5">Scope</div><p class="text-white/22 text-xs" style="white-space:nowrap">Target definition</p></div>
+    <div class="card p-5 text-center"><div class="snum mb-3">03</div><div class="text-[.82rem] font-bold mb-1.5">Architect</div><p class="text-white/22 text-xs" style="white-space:nowrap">System design</p></div>
+    <div class="card p-5 text-center"><div class="snum mb-3">04</div><div class="text-[.82rem] font-bold mb-1.5">Build</div><p class="text-white/22 text-xs" style="white-space:nowrap">Dev & testing</p></div>
+    <div class="card p-5 text-center"><div class="snum mb-3">05</div><div class="text-[.82rem] font-bold mb-1.5">Integrate</div><p class="text-white/22 text-xs" style="white-space:nowrap">Live deployment</p></div>
+    <div class="card p-5 text-center"><div class="snum mb-3">06</div><div class="text-[.82rem] font-bold mb-1.5">Handoff</div><p class="text-white/22 text-xs" style="white-space:nowrap">Team training</p></div>
+    <div class="card p-5 text-center" style="border-color:rgba(59,130,246,.22)"><div class="snum mb-3">07</div><div class="text-[.82rem] font-bold mb-1.5 tgb">Iterate</div><p class="text-white/22 text-xs" style="white-space:nowrap">Measure & refine</p></div>
+  </div>
+</div>
+</section>
+
+
+<!-- ════════  RESULTS  ════════ -->
+<section id="results" class="py-28 px-6 border-t border-white/[0.05]">
+<div class="max-w-7xl mx-auto">
+
+  <div class="mb-12 r">
+    <div class="slabel mb-3">Performance</div>
+    <h2 class="text-[clamp(1.5rem,3vw,2.6rem)] font-black tracking-tight mt-3 leading-[1.2]">
+      <span class="block">How much time does</span>
+      <span class="block tg">automation actually save?</span>
+    </h2>
+    <p class="text-white/28 text-[.85rem] mt-3 max-w-xl">Same task — done manually vs. done with NEXORA. Each number is from a real Revit project.</p>
+  </div>
+
+  <!-- Horizontal Bar Chart -->
+  <div class="pbi-dash r" id="perf-chart" style="border-radius:12px">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/[0.05]">
+      <div>
+        <div class="text-[.72rem] font-semibold text-white/55">Time per task — with NEXORA</div>
+        <div class="text-[.6rem] text-white/22 mt-0.5">Manual time shown for comparison</div>
+      </div>
+      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full" style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.18)">
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+        <span class="text-[.62rem] text-blue-300 font-semibold">Max 20 min</span>
+      </div>
+    </div>
+
+    <!-- Chart rows — scale 0→20 min -->
+    <div class="px-5 pb-3 pt-4 flex flex-col gap-0" id="chart-rows">
+
+      <!-- Modeling: 5 min / was 8 hrs -->
+      <div class="chart-rw flex items-center gap-4 px-2 py-3.5 rounded-lg" style="transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.025)'" onmouseout="this.style.background='transparent'">
+        <div class="w-28 sm:w-40 flex-shrink-0">
+          <div class="font-semibold text-[.83rem] text-white/80">Modeling</div>
+          <div class="text-[.6rem] text-white/22 mt-0.5">was <span class="text-white/35">8 hrs</span> manually</div>
+        </div>
+        <div class="flex-1 flex items-center gap-3">
+          <div class="flex-1 h-[11px] rounded-full overflow-hidden" style="background:rgba(255,255,255,.05)">
+            <div class="h-full rounded-full cbar" data-w="25" data-delay="0" style="background:linear-gradient(90deg,#7dd3fc,#3b82f6);width:0%;transition:width 1s cubic-bezier(.22,1,.36,1)"></div>
+          </div>
+          <span class="text-[.78rem] text-blue-400 font-bold w-12 text-right flex-shrink-0">5 min</span>
+        </div>
+        <div class="w-14 flex-shrink-0 text-right">
+          <div class="text-[1.2rem] font-black leading-none tgb">95%</div>
+          <div class="text-[.54rem] text-white/20 uppercase tracking-wide mt-0.5">faster</div>
+        </div>
+      </div>
+
+      <!-- Data Management: 10 min / was 4 hrs -->
+      <div class="chart-rw flex items-center gap-4 px-2 py-3.5 rounded-lg" style="transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.025)'" onmouseout="this.style.background='transparent'">
+        <div class="w-28 sm:w-40 flex-shrink-0">
+          <div class="font-semibold text-[.83rem] text-white/80">Data Management</div>
+          <div class="text-[.6rem] text-white/22 mt-0.5">was <span class="text-white/35">4 hrs</span> manually</div>
+        </div>
+        <div class="flex-1 flex items-center gap-3">
+          <div class="flex-1 h-[11px] rounded-full overflow-hidden" style="background:rgba(255,255,255,.05)">
+            <div class="h-full rounded-full cbar" data-w="50" data-delay="120" style="background:linear-gradient(90deg,#c4b5fd,#7c3aed);width:0%;transition:width 1s cubic-bezier(.22,1,.36,1)"></div>
+          </div>
+          <span class="text-[.78rem] font-bold w-12 text-right flex-shrink-0" style="color:#c4b5fd">10 min</span>
+        </div>
+        <div class="w-14 flex-shrink-0 text-right">
+          <div class="text-[1.2rem] font-black leading-none" style="color:#c4b5fd">88%</div>
+          <div class="text-[.54rem] text-white/20 uppercase tracking-wide mt-0.5">faster</div>
+        </div>
+      </div>
+
+      <!-- Documentation: 15 min / was 6 hrs -->
+      <div class="chart-rw flex items-center gap-4 px-2 py-3.5 rounded-lg" style="transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.025)'" onmouseout="this.style.background='transparent'">
+        <div class="w-28 sm:w-40 flex-shrink-0">
+          <div class="font-semibold text-[.83rem] text-white/80">Documentation</div>
+          <div class="text-[.6rem] text-white/22 mt-0.5">was <span class="text-white/35">6 hrs</span> manually</div>
+        </div>
+        <div class="flex-1 flex items-center gap-3">
+          <div class="flex-1 h-[11px] rounded-full overflow-hidden" style="background:rgba(255,255,255,.05)">
+            <div class="h-full rounded-full cbar" data-w="75" data-delay="240" style="background:linear-gradient(90deg,#34d399,#06b6d4);width:0%;transition:width 1s cubic-bezier(.22,1,.36,1)"></div>
+          </div>
+          <span class="text-[.78rem] text-cyan-400 font-bold w-12 text-right flex-shrink-0">15 min</span>
+        </div>
+        <div class="w-14 flex-shrink-0 text-right">
+          <div class="text-[1.2rem] font-black leading-none" style="color:#67e8f9">80%</div>
+          <div class="text-[.54rem] text-white/20 uppercase tracking-wide mt-0.5">faster</div>
+        </div>
+      </div>
+
+      <!-- Audit & QC: 20 min / was 2 hrs -->
+      <div class="chart-rw flex items-center gap-4 px-2 py-3.5 rounded-lg" style="transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.025)'" onmouseout="this.style.background='transparent'">
+        <div class="w-28 sm:w-40 flex-shrink-0">
+          <div class="font-semibold text-[.83rem] text-white/80">Audit &amp; QC</div>
+          <div class="text-[.6rem] text-white/22 mt-0.5">was <span class="text-white/35">2 hrs</span> manually</div>
+        </div>
+        <div class="flex-1 flex items-center gap-3">
+          <div class="flex-1 h-[11px] rounded-full overflow-hidden" style="background:rgba(255,255,255,.05)">
+            <div class="h-full rounded-full cbar" data-w="100" data-delay="360" style="background:linear-gradient(90deg,#4ade80,#22d3ee);width:0%;transition:width 1s cubic-bezier(.22,1,.36,1)"></div>
+          </div>
+          <span class="text-[.78rem] text-green-400 font-bold w-12 text-right flex-shrink-0">20 min</span>
+        </div>
+        <div class="w-14 flex-shrink-0 text-right">
+          <div class="text-[1.2rem] font-black leading-none" style="color:#86efac">75%</div>
+          <div class="text-[.54rem] text-white/20 uppercase tracking-wide mt-0.5">faster</div>
+        </div>
+      </div>
+
+    </div><!-- /chart rows -->
+
+    <!-- X-axis scale: 0 → 20 min -->
+    <div class="pb-4 pt-1 border-t border-white/[0.04]" style="padding-left:calc(112px + 1rem + 1.25rem);padding-right:calc(56px + 48px + 1.5rem)">
+      <div class="flex justify-between">
+        <span class="text-[.58rem] text-white/18">0</span>
+        <span class="text-[.58rem] text-white/18">5 min</span>
+        <span class="text-[.58rem] text-white/18">10 min</span>
+        <span class="text-[.58rem] text-white/18">15 min</span>
+        <span class="text-[.58rem] text-white/18">20 min</span>
+      </div>
+    </div>
+
+  </div><!-- end chart -->
+
+</div>
+</section>
+
+
+<!-- ════════  R&D LABS  ════════ -->
+<section id="labs" class="py-28 px-6 border-t border-white/[0.05]">
+<div class="max-w-7xl mx-auto">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-end mb-14 r">
+    <div>
+      <div class="slabel mb-3">R&D</div>
+      <h2 class="text-[clamp(1.5rem,3vw,2.4rem)] font-black tracking-tight mt-3">
+        Research & <span class="tg">Development</span>
+      </h2>
+      <p class="text-white/30 text-[.88rem] leading-relaxed mt-3 max-w-sm">New technologies are explored, tested against real BIM workflows, and — when proven — developed into usable tools within the platform.</p>
+    </div>
+    <div class="lab-card p-6 r">
+      <div class="text-[.62rem] uppercase tracking-widest text-purple-400/60 font-bold mb-2">Focus Areas</div>
+      <p class="text-white/45 text-[.88rem] leading-relaxed">Applying machine learning, constraint-based logic, and automation techniques to solve problems that currently require significant manual effort in BIM workflows.</p>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-0 r" style="border:1px solid rgba(139,92,246,.12);border-radius:18px;overflow:hidden">
+
+    <!-- Step 01 -->
+    <div class="lab-card p-8" style="border-radius:0;border-bottom:1px solid rgba(139,92,246,.1)">
+      <div class="flex items-start gap-6">
+        <div class="flex-shrink-0 flex flex-col items-center gap-2">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/18 flex items-center justify-center">
+            <svg style="width:18px;height:18px" class="text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+          </div>
+          <div style="width:1px;flex:1;min-height:60px;background:linear-gradient(to bottom,rgba(139,92,246,.2),transparent)"></div>
+        </div>
+        <div class="flex-1 pt-1">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[.62rem] font-black tracking-[.18em] text-purple-400/50 uppercase">01</span>
+            <h3 class="text-[1rem] font-bold">Problem Definition & Domain Analysis</h3>
+          </div>
+          <p class="text-white/32 text-[.84rem] leading-relaxed mb-3">Every initiative starts with a deep understanding of real-world challenges. We collaborate with domain specialists to analyze workflows, identify bottlenecks, and define the core problem from an engineering perspective.</p>
+          <p class="text-white/22 text-[.82rem] leading-relaxed">This phase ensures that every research direction is grounded in practical needs, not assumptions.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 02 -->
+    <div class="lab-card p-8" style="border-radius:0;border-bottom:1px solid rgba(139,92,246,.1)">
+      <div class="flex items-start gap-6">
+        <div class="flex-shrink-0 flex flex-col items-center gap-2">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/18 flex items-center justify-center">
+            <svg style="width:18px;height:18px" class="text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/></svg>
+          </div>
+          <div style="width:1px;flex:1;min-height:60px;background:linear-gradient(to bottom,rgba(139,92,246,.2),transparent)"></div>
+        </div>
+        <div class="flex-1 pt-1">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[.62rem] font-black tracking-[.18em] text-purple-400/50 uppercase">02</span>
+            <h3 class="text-[1rem] font-bold">Applied Research & Exploration</h3>
+          </div>
+          <p class="text-white/32 text-[.84rem] leading-relaxed mb-3">Once the problem is clearly defined, we initiate targeted research to explore potential solutions. This includes investigating computational methods, AI techniques, and algorithmic approaches relevant to the problem.</p>
+          <p class="text-white/22 text-[.82rem] leading-relaxed">Feasibility, limitations, and performance are evaluated through controlled experiments before any development begins.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 03 -->
+    <div class="lab-card p-8" style="border-radius:0">
+      <div class="flex items-start gap-6">
+        <div class="flex-shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/18 flex items-center justify-center">
+            <svg style="width:18px;height:18px" class="text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
+          </div>
+        </div>
+        <div class="flex-1 pt-1">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[.62rem] font-black tracking-[.18em] text-purple-400/50 uppercase">03</span>
+            <h3 class="text-[1rem] font-bold">Development & Prototyping</h3>
+          </div>
+          <p class="text-white/32 text-[.84rem] leading-relaxed mb-3">Validated research outcomes are translated into functional prototypes and automation workflows. At this stage, we focus on building scalable, efficient solutions that integrate seamlessly with BIM environments.</p>
+          <p class="text-white/22 text-[.82rem] leading-relaxed">All development maintains alignment with engineering standards and project requirements throughout the build cycle.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+
+<!-- ════════  ENGINEERING & PROJECTS  ════════ -->
+<section id="engineering" class="py-28 px-6 border-t border-white/[0.05]">
+<div class="max-w-7xl mx-auto">
+
+  <!-- Header -->
+  <div class="text-center mb-16 r">
+    <div class="slabel mb-4" style="justify-content:center">Engineering</div>
+    <h2 class="text-[clamp(1.8rem,3.4vw,2.8rem)] font-black tracking-tight mt-3 text-center">Engineering <span class="tg">&amp; Projects</span></h2>
+    <p class="text-white/35 text-[.9rem] mt-4 max-w-lg mx-auto leading-relaxed text-center">From design to shop drawings — delivering efficient, coordinated engineering solutions.</p>
+  </div>
+
+  <!-- Services Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-24 r">
+
+    <!-- Structural Design -->
+    <div class="group relative rounded-xl border border-white/[0.07] bg-white/[0.02] p-6 overflow-hidden transition-all duration-300 hover:border-blue-500/30 hover:bg-blue-500/[0.04]">
+      <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(59,130,246,.06) 0%,transparent 70%)"></div>
+      <div class="relative">
+        <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-5 group-hover:bg-blue-500/18 group-hover:border-blue-500/35 transition-all duration-300">
+          <svg style="width:18px;height:18px" class="text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+        </div>
+        <div class="font-bold text-[.95rem] mb-2 text-white/90">Structural Design</div>
+        <p class="text-white/35 text-[.82rem] leading-relaxed">Safe and optimized structural systems based on international standards.</p>
+      </div>
+    </div>
+
+    <!-- Shop Drawings -->
+    <div class="group relative rounded-xl border border-white/[0.07] bg-white/[0.02] p-6 overflow-hidden transition-all duration-300 hover:border-cyan-500/30 hover:bg-cyan-500/[0.04]">
+      <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(6,182,212,.06) 0%,transparent 70%)"></div>
+      <div class="relative">
+        <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5 group-hover:bg-cyan-500/18 group-hover:border-cyan-500/35 transition-all duration-300">
+          <svg style="width:18px;height:18px" class="text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+        </div>
+        <div class="font-bold text-[.95rem] mb-2 text-white/90">Shop Drawings</div>
+        <p class="text-white/35 text-[.82rem] leading-relaxed">Accurate, site-ready drawings with clear execution details.</p>
+      </div>
+    </div>
+
+    <!-- Quantity Takeoff -->
+    <div class="group relative rounded-xl border border-white/[0.07] bg-white/[0.02] p-6 overflow-hidden transition-all duration-300 hover:border-orange-500/30 hover:bg-orange-500/[0.04]">
+      <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(251,146,60,.06) 0%,transparent 70%)"></div>
+      <div class="relative">
+        <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-5 group-hover:bg-orange-500/18 group-hover:border-orange-500/35 transition-all duration-300">
+          <svg style="width:18px;height:18px" class="text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+        </div>
+        <div class="font-bold text-[.95rem] mb-2 text-white/90">Quantity Takeoff</div>
+        <p class="text-white/35 text-[.82rem] leading-relaxed">Precise material quantities for cost control and planning.</p>
+      </div>
+    </div>
+
+    <!-- BIM Modeling -->
+    <div class="group relative rounded-xl border border-white/[0.07] bg-white/[0.02] p-6 overflow-hidden transition-all duration-300 hover:border-purple-500/30 hover:bg-purple-500/[0.04]">
+      <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(168,85,247,.06) 0%,transparent 70%)"></div>
+      <div class="relative">
+        <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-5 group-hover:bg-purple-500/18 group-hover:border-purple-500/35 transition-all duration-300">
+          <svg style="width:18px;height:18px" class="text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
+        </div>
+        <div class="font-bold text-[.95rem] mb-2 text-white/90">BIM Modeling</div>
+        <p class="text-white/35 text-[.82rem] leading-relaxed">Detailed, data-rich 3D models for all project stages.</p>
+      </div>
+    </div>
+
+    <!-- BIM Coordination -->
+    <div class="group relative rounded-xl border border-white/[0.07] bg-white/[0.02] p-6 overflow-hidden transition-all duration-300 hover:border-green-500/30 hover:bg-green-500/[0.04]">
+      <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(34,197,94,.06) 0%,transparent 70%)"></div>
+      <div class="relative">
+        <div class="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center mb-5 group-hover:bg-green-500/18 group-hover:border-green-500/35 transition-all duration-300">
+          <svg style="width:18px;height:18px" class="text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>
+        </div>
+        <div class="font-bold text-[.95rem] mb-2 text-white/90">BIM Coordination</div>
+        <p class="text-white/35 text-[.82rem] leading-relaxed">Clash detection and coordination to prevent site conflicts.</p>
+      </div>
+    </div>
+
+    <!-- Architectural Design -->
+    <div class="group relative rounded-xl border border-white/[0.07] bg-white/[0.02] p-6 overflow-hidden transition-all duration-300 hover:border-yellow-500/30 hover:bg-yellow-500/[0.04]">
+      <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(234,179,8,.06) 0%,transparent 70%)"></div>
+      <div class="relative">
+        <div class="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center mb-5 group-hover:bg-yellow-500/18 group-hover:border-yellow-500/35 transition-all duration-300">
+          <svg style="width:18px;height:18px" class="text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/></svg>
+        </div>
+        <div class="font-bold text-[.95rem] mb-2 text-white/90">Architectural Design</div>
+        <p class="text-white/35 text-[.82rem] leading-relaxed">Functional and efficient architectural layouts.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Selected Projects — flip cards -->
+  <div class="r">
+    <div class="text-center mb-10">
+      <div class="slabel mb-3" style="justify-content:center">Selected Projects</div>
+      <h3 class="text-[clamp(1.2rem,2.5vw,1.8rem)] font-black tracking-tight mt-2 text-center">Real projects. <span class="tg">Real deliverables.</span></h3>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+
+      <!-- 1 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(37,99,235,.35) 0%,rgba(6,182,212,.2) 100%);border:1px solid rgba(59,130,246,.18)">
+            <img src="PHOTOS/MASAR PACKAGE A - KSA.jpg" style="display:block" alt="MASAR Package A" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.15) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">01</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">MASAR Package A</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">KSA</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">01 · KSA</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">MASAR Package A</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Created detailed shop drawings for a complex structural project, ensuring accuracy and seamless coordination between design teams.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(6,182,212,.3) 0%,rgba(37,99,235,.18) 100%);border:1px solid rgba(6,182,212,.18)">
+            <img src="PHOTOS/Sidi heneish - North coast.png" style="display:block" alt="Sidi Heneish" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.1) 0%,rgba(6,8,15,.25) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">02</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">Sidi Heneish</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">North Coast</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">02 · North Coast</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">Sidi Heneish</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Used BIM technology to create accurate models and shop drawings, ensuring smooth coordination and timely project delivery.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(139,92,246,.3) 0%,rgba(59,130,246,.18) 100%);border:1px solid rgba(139,92,246,.18)">
+            <img src="PHOTOS/White Sand - North coast.png" style="display:block" alt="White Sand" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.1) 0%,rgba(6,8,15,.25) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">03</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">White Sand</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">North Coast</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">03 · North Coast</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">White Sand</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Developed detailed shop drawings for a challenging structural project, ensuring design accuracy and effective coordination with multidisciplinary teams.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(251,146,60,.28) 0%,rgba(234,179,8,.15) 100%);border:1px solid rgba(251,146,60,.18)">
+            <img src="PHOTOS/Solare - Ras El Hekma.png" style="display:block" alt="Solare" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.1) 0%,rgba(6,8,15,.25) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">04</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">Solare</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">Ras El Hekma</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">04 · Ras El Hekma</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">Solare</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Prepared structural shop drawings for a complex project, aligned with design review standards and multidisciplinary coordination.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(34,197,94,.25) 0%,rgba(6,182,212,.15) 100%);border:1px solid rgba(34,197,94,.18)">
+            <img src="PHOTOS/Marsa Baghush - North coast.png" style="display:block" alt="Marsa Baghush" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.1) 0%,rgba(6,8,15,.25) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">05</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">Marsa Baghush</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">North Coast</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">05 · North Coast</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">Marsa Baghush</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Used BIM technology to create accurate models and shop drawings, ensuring smooth coordination and timely project delivery with fewer conflicts.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(59,130,246,.3) 0%,rgba(139,92,246,.18) 100%);border:1px solid rgba(59,130,246,.2)">
+            <img src="PHOTOS/Waterfront - Alexandria.jpeg" style="display:block" alt="Waterfront" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.12) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">06</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">Waterfront</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">Alexandria</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">06 · Alexandria</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">Waterfront</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Reviewed and produced accurate BIM-based shop drawings, ensuring design compliance and effective coordination with all disciplines.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(244,63,94,.25) 0%,rgba(251,146,60,.15) 100%);border:1px solid rgba(244,63,94,.18)">
+            <img src="PHOTOS/ISOLA - SHERATON.png" style="display:block" alt="ISOLA Sheraton" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.12) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">07</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">ISOLA Sheraton</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">Cairo</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">07 · Cairo</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">ISOLA Sheraton</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Utilized BIM to review and develop precise shop drawings, coordinating across disciplines to ensure clarity, accuracy, and efficient delivery.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(168,85,247,.28) 0%,rgba(59,130,246,.15) 100%);border:1px solid rgba(168,85,247,.18)">
+            <img src="PHOTOS/VEE - Alexandria.png" style="display:block" alt="VEE" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.12) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">08</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">VEE</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">Alexandria</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">08 · Alexandria</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">VEE</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Created detailed shop drawings for a complex structural project, ensuring accuracy and seamless coordination between design teams.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(20,184,166,.28) 0%,rgba(37,99,235,.15) 100%);border:1px solid rgba(20,184,166,.18)">
+            <img src="PHOTOS/Jacaranda - Alexandria.png" style="display:block" alt="Jacaranda" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.12) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">09</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">Jacaranda</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">Alexandria</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">09 · Alexandria</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">Jacaranda</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Designed structural systems and produced detailed drawings, ensuring accuracy, code compliance, and seamless coordination with other disciplines.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(37,99,235,.32) 0%,rgba(20,184,166,.15) 100%);border:1px solid rgba(37,99,235,.2)">
+            <img src="PHOTOS/GATE قرية هانى - Alexandria.png" style="display:block" alt="GATE" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.12) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">10</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">GATE</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">New Alamein</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">10 · New Alamein</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">GATE</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Designed the steel gate ensuring accurate dimensions and smooth coordination with other structural elements.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(234,179,8,.25) 0%,rgba(251,146,60,.15) 100%);border:1px solid rgba(234,179,8,.18)">
+            <img src="PHOTOS/Conference Hall - Cairo.png" style="display:block" alt="Conference Hall" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.12) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">11</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">Conference Hall</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">Cairo</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">11 · Cairo</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">Conference Hall</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Developed structural systems and delivered precise technical drawings, ensuring compliance with relevant codes and effective integration with architectural and MEP disciplines.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(139,92,246,.28) 0%,rgba(244,63,94,.12) 100%);border:1px solid rgba(139,92,246,.18)">
+            <img src="PHOTOS/Muruj B10,11 - Alexandria.png" style="display:block" alt="Muruj B10.11" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.12) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">12</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">Muruj B10.11</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">Alexandria</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">12 · Alexandria</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">Muruj B10.11</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Responsible for structural shop drawings ensuring design compliance with relevant codes and multidisciplinary coordination.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 13 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(6,182,212,.28) 0%,rgba(139,92,246,.15) 100%);border:1px solid rgba(6,182,212,.18)">
+            <img src="PHOTOS/La Gaite - Hurghada.png" style="display:block" alt="La Gaite" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.12) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">13</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">La Gaite</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">Hurghada</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">13 · Hurghada</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">La Gaite</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Designed structural systems and produced detailed drawings, ensuring accuracy, code compliance, and seamless coordination with other disciplines.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 14 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(34,197,94,.25) 0%,rgba(37,99,235,.15) 100%);border:1px solid rgba(34,197,94,.18)">
+            <img src="PHOTOS/U.PARK Muruj - Alexandria.jpg" style="display:block" alt="U.PARK Muruj" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.12) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">14</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">U.PARK Muruj</div>
+              <div class="text-white/45 text-[.65rem] mt-0.5">Alexandria</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">14 · Alexandria</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">U.PARK Muruj</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Prepared structural shop drawings and verified design compliance with codes and coordination requirements across all disciplines.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(59,130,246,.32) 0%,rgba(6,182,212,.18) 100%);border:1px solid rgba(59,130,246,.22)">
+            <img src="PHOTOS/PostTension Bridge - Egypt.png" style="display:block" alt="Post-Tension Bridge" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.12) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">15</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">Post-Tension Bridge</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">Egypt</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">15 · Egypt</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">Post-Tension Bridge</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Responsible for designing a post-tensioned bridge with focus on accuracy, code compliance, and multidisciplinary coordination.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 16 -->
+      <div class="flip-scene" tabindex="0">
+        <div class="flip-card">
+          <div class="flip-face" style="background:linear-gradient(145deg,rgba(244,63,94,.22) 0%,rgba(168,85,247,.15) 100%);border:1px solid rgba(244,63,94,.16)">
+            <img src="PHOTOS/Hospital.png" style="display:block" alt="Physiotherapy Dept." loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background:linear-gradient(145deg,rgba(6,8,15,.12) 0%,rgba(6,8,15,.3) 100%)"></div>
+            <div class="absolute top-3 left-3.5"><span class="text-[.52rem] font-black text-white/50 tracking-[.18em]">16</span></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3.5" style="background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%)">
+              <div class="font-bold text-[.85rem] leading-tight">Physiotherapy Dept.</div>
+              <div class="text-white/55 text-[.65rem] mt-0.5">Mostafa Kamel Hospital</div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <div class="text-blue-400/50 text-[.52rem] uppercase tracking-[.18em] font-black mb-2">16 · Alexandria</div>
+              <div class="font-bold text-[.88rem] mb-2.5 leading-snug">Physiotherapy Dept.</div>
+              <p class="text-white/50 text-[.72rem] leading-relaxed">Responsible for the structural rehabilitation of this building to restore its integrity and ensure code compliance.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /projects grid -->
+  </div><!-- /selected projects -->
+
+  <!-- Portfolio CTA -->
+  <div class="mt-14 r">
+    <div class="glass border border-white/[0.07] rounded-2xl p-8 text-center" style="background:radial-gradient(ellipse 65% 70% at 50% 50%,rgba(37,99,235,.07) 0%,transparent 70%)">
+      <div class="text-white/20 text-[.65rem] uppercase tracking-[.18em] font-semibold mb-3 text-center">Portfolio</div>
+      <h3 class="text-[1.3rem] font-black tracking-tight mb-2 text-center">Explore full portfolio</h3>
+      <p class="text-white/28 text-[.82rem] mb-6 text-center whitespace-nowrap">Detailed drawings, BIM models, and real project outputs available.</p>
+      <a href="https://khaled-saieed-portfolio.my.canva.site/black-and-white-modern-professional-business-proposal-presentation" target="_blank" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 px-8 py-3.5 rounded-xl font-bold text-[.85rem] transition-all hover:shadow-xl hover:shadow-blue-600/25 hover:-translate-y-0.5">
+        View Portfolio
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+    </div>
+  </div>
+
+</div>
+</section>
+
+
+<!-- ════════  ABOUT  ════════ -->
+<section id="about" class="py-28 px-6 border-t border-white/[0.05]">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+
+  <div class="r">
+    <div class="slabel mb-5">About</div>
+    <h2 class="text-[clamp(1.5rem,3vw,2.4rem)] font-black tracking-tight mt-3 mb-7 leading-[1.2]">
+      Khaled Saieed.<br>
+      <span class="tg">BIM Automation Engineer.</span>
+    </h2>
+    <p class="text-white/38 leading-relaxed mb-4 text-[.88rem]">
+      Most BIM workflows are slower than they need to be. Engineers spend time on repetitive tasks — manual placement, parameter editing, sheet rebuilding — that add no real value to the project.
+    </p>
+    <p class="text-white/38 leading-relaxed mb-8 text-[.88rem]">
+      NEXORA was built to solve this directly. Each tool in the platform addresses a specific workflow problem and replaces it with a reliable automated process.
+    </p>
+
+    <div class="flex gap-3 flex-wrap mb-7">
+      <a href="https://wa.me/201068002614" target="_blank" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-xl font-bold text-[.82rem] transition-all hover:shadow-lg hover:shadow-blue-600/20">
+        WhatsApp
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/khaled-saieed-b10a40247/" target="_blank" class="inline-flex items-center gap-2 glass border border-white/[0.07] px-6 py-3 rounded-xl font-bold text-[.82rem] text-white/38 hover:text-white/70 hover:bg-white/[0.04] transition-all">LinkedIn</a>
+      <a href="https://github.com/KhaledSaieed23" target="_blank" class="inline-flex items-center gap-2 glass border border-white/[0.07] px-6 py-3 rounded-xl font-bold text-[.82rem] text-white/38 hover:text-white/70 hover:bg-white/[0.04] transition-all">GitHub</a>
+      <a href="https://www.youtube.com/@KhaledSaieedStudio" target="_blank" class="inline-flex items-center gap-2 glass border border-white/[0.07] px-6 py-3 rounded-xl font-bold text-[.82rem] text-white/38 hover:text-white/70 hover:bg-white/[0.04] transition-all">YouTube</a>
+      <a href="https://khaled-saieed-portfolio.my.canva.site/black-and-white-modern-professional-business-proposal-presentation" target="_blank" class="inline-flex items-center gap-2 glass border border-white/[0.07] px-6 py-3 rounded-xl font-bold text-[.82rem] text-white/38 hover:text-white/70 hover:bg-white/[0.04] transition-all">Portfolio</a>
+    </div>
+  </div>
+
+  <div class="r grid grid-cols-2 gap-3">
+    <div class="card p-7"><div class="text-[2.4rem] font-black tgb mb-1">100+</div><div class="text-white/30 text-[.82rem] font-medium">Hours Saved</div></div>
+    <div class="card p-7"><div class="text-[2.4rem] font-black tgb mb-1">21+</div><div class="text-white/30 text-[.82rem] font-medium">Tools Shipped</div></div>
+    <div class="card p-6 col-span-2" style="border-left:2px solid rgba(59,130,246,.4)">
+      <div class="text-white/55 text-[.72rem] font-black uppercase tracking-[.12em] mb-2">Mission</div>
+      <p class="text-white/45 text-[.88rem] leading-relaxed">To transform BIM workflows into intelligent, automated systems that eliminate repetitive work and elevate engineering efficiency.</p>
+    </div>
+    <div class="card p-6 col-span-2" style="border-left:2px solid rgba(139,92,246,.4)">
+      <div class="text-white/55 text-[.72rem] font-black uppercase tracking-[.12em] mb-2">Vision</div>
+      <p class="text-white/45 text-[.88rem] leading-relaxed">To lead the future of engineering automation by unifying BIM, data, and AI into a single, scalable platform for digital construction.</p>
+    </div>
+  </div>
+
+</div>
+</section>
+
+
+<!-- ════════  CTA  ════════ -->
+<section id="contact" class="py-28 px-6 border-t border-white/[0.05]">
+<div class="max-w-3xl mx-auto text-center r">
+  <div style="background:radial-gradient(ellipse 75% 55% at 50% 50%,rgba(37,99,235,.1) 0%,transparent 70%);border:1px solid rgba(255,255,255,.05);border-radius:24px;overflow:hidden">
+
+    <!-- CTA top -->
+    <div style="padding:4rem 2.5rem 2.5rem">
+      <div class="chip mb-5 mx-auto" style="width:fit-content"><span class="cdot"></span>Get in Touch</div>
+      <h2 class="font-black tracking-tight mb-5 mt-3 leading-tight" style="font-size:clamp(1.1rem,2.6vw,2.2rem);white-space:nowrap">
+        Start automating your workflow.
+      </h2>
+      <p class="text-white/28 text-[.88rem] mb-10 max-w-sm mx-auto leading-relaxed">
+        Book a free 15-minute call to review your current workflow and identify where automation applies.
+      </p>
+      <a href="https://wa.me/201068002614" target="_blank" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 px-9 py-4 rounded-xl text-[.88rem] font-bold transition-all hover:shadow-xl hover:shadow-blue-600/25 hover:-translate-y-0.5">
+        Book a Call
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-white/[0.05]" style="padding:.9rem 2.5rem">
+      <span class="text-white/18 text-[.65rem] uppercase tracking-[.2em] font-semibold">Or reach out directly</span>
+    </div>
+
+    <!-- Social channels — inside same card -->
+    <div id="social-links" class="grid grid-cols-2 sm:grid-cols-4" style="border-top:1px solid rgba(255,255,255,.04)">
+      <a href="https://wa.me/201068002614" target="_blank" class="flex items-center gap-3 px-5 py-5 hover:bg-white/[0.03] transition-all group" style="border-right:1px solid rgba(255,255,255,.05)">
+        <span class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.14)">
+          <svg style="width:15px;height:15px;color:#4ade80" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </span>
+        <div class="text-left">
+          <div class="text-[.78rem] font-bold text-white/65 group-hover:text-white transition-colors">WhatsApp</div>
+          <div class="text-[.62rem] text-white/22">Direct message</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/khaled-saieed-b10a40247/" target="_blank" class="flex items-center gap-3 px-5 py-5 hover:bg-white/[0.03] transition-all group" style="border-right:1px solid rgba(255,255,255,.05)">
+        <span class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(10,102,194,.08);border:1px solid rgba(10,102,194,.18)">
+          <svg style="width:15px;height:15px;color:#60a5fa" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </span>
+        <div class="text-left">
+          <div class="text-[.78rem] font-bold text-white/65 group-hover:text-white transition-colors">LinkedIn</div>
+          <div class="text-[.62rem] text-white/22">Professional profile</div>
+        </div>
+      </a>
+      <a href="https://github.com/KhaledSaieed23" target="_blank" class="flex items-center gap-3 px-5 py-5 hover:bg-white/[0.03] transition-all group" style="border-right:1px solid rgba(255,255,255,.05)">
+        <span class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09)">
+          <svg style="width:15px;height:15px;color:rgba(255,255,255,.55)" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </span>
+        <div class="text-left">
+          <div class="text-[.78rem] font-bold text-white/65 group-hover:text-white transition-colors">GitHub</div>
+          <div class="text-[.62rem] text-white/22">Open projects</div>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/@KhaledSaieedStudio" target="_blank" class="flex items-center gap-3 px-5 py-5 hover:bg-white/[0.03] transition-all group">
+        <span class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(255,0,0,.06);border:1px solid rgba(255,0,0,.12)">
+          <svg style="width:15px;height:15px;color:#f87171" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </span>
+        <div class="text-left">
+          <div class="text-[.78rem] font-bold text-white/65 group-hover:text-white transition-colors">YouTube</div>
+          <div class="text-[.62rem] text-white/22">Videos & demos</div>
+        </div>
+      </a>
+    </div><!-- /social grid -->
+  </div><!-- /main card -->
+
+</div>
+</section>
+
+
+
+
+<!-- ════════  FOOTER  ════════ -->
+<footer class="border-t border-white/[0.05] py-12 px-6">
+<div class="max-w-7xl mx-auto">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
+    <div class="col-span-2 md:col-span-1">
+      <a href="#" class="flex items-center gap-2 font-black text-[.95rem] mb-3">
+        <svg width="22" height="22" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="41.5" y="5"  width="7"  height="7"  rx="1.5" fill="#93c5fd" opacity="0.4"  transform="rotate(0   45 45)"/>
+          <rect x="41"   y="5"  width="8"  height="8"  rx="2"   fill="#60a5fa" opacity="0.55" transform="rotate(30  45 45)"/>
+          <rect x="40.5" y="4"  width="9"  height="9"  rx="2"   fill="#3b82f6" opacity="0.7"  transform="rotate(60  45 45)"/>
+          <rect x="40"   y="4"  width="10" height="10" rx="2.5" fill="#2563eb" opacity="0.85" transform="rotate(90  45 45)"/>
+          <rect x="40"   y="3"  width="10" height="12" rx="2.5" fill="#2563eb"                transform="rotate(120 45 45)"/>
+          <rect x="40"   y="2"  width="10" height="14" rx="3"   fill="#1d4ed8"                transform="rotate(150 45 45)"/>
+          <rect x="40"   y="2"  width="10" height="14" rx="3"   fill="#1d4ed8"                transform="rotate(180 45 45)"/>
+          <rect x="40"   y="3"  width="10" height="12" rx="2.5" fill="#2563eb"                transform="rotate(210 45 45)"/>
+          <rect x="40"   y="4"  width="10" height="10" rx="2.5" fill="#2563eb" opacity="0.85" transform="rotate(240 45 45)"/>
+          <rect x="40.5" y="4"  width="9"  height="9"  rx="2"   fill="#3b82f6" opacity="0.6"  transform="rotate(270 45 45)"/>
+          <rect x="41"   y="5"  width="8"  height="8"  rx="2"   fill="#60a5fa" opacity="0.4"  transform="rotate(300 45 45)"/>
+          <rect x="41.5" y="5"  width="7"  height="7"  rx="1.5" fill="#93c5fd" opacity="0.25" transform="rotate(330 45 45)"/>
+          <circle cx="45" cy="45" r="5" fill="#2563eb"/>
+        </svg>
+        <span class="tgb font-black">NEXORA</span>
+      </a>
+      <p class="text-white/18 text-xs leading-relaxed max-w-[200px] mb-3">Building the Future of Digital Construction</p>
+      <p class="text-white/14 text-xs">by Khaled Saieed</p>
+    </div>
+    <div>
+      <div class="text-white/28 text-xs font-semibold uppercase tracking-wider mb-4">Product</div>
+      <div class="flex flex-col gap-2.5 text-white/18 text-[.78rem]">
+        <a href="#suite" class="hover:text-white/45 transition-colors">Automation Suite</a>
+        <a href="#suite" class="hover:text-white/45 transition-colors">Modeling Tools</a>
+        <a href="#suite" class="hover:text-white/45 transition-colors">Data Management</a>
+        <a href="#suite" class="hover:text-white/45 transition-colors">Audit & QC</a>
+      </div>
+    </div>
+    <div>
+      <div class="text-white/28 text-xs font-semibold uppercase tracking-wider mb-4">Company</div>
+      <div class="flex flex-col gap-2.5 text-white/18 text-[.78rem]">
+        <a href="#services"    class="hover:text-white/45 transition-colors">Services</a>
+        <a href="#results"     class="hover:text-white/45 transition-colors">Results</a>
+        <a href="#engineering" class="hover:text-white/45 transition-colors">Engineering</a>
+        <a href="#about"       class="hover:text-white/45 transition-colors">About</a>
+      </div>
+    </div>
+    <div>
+      <div class="text-white/28 text-xs font-semibold uppercase tracking-wider mb-4">Connect</div>
+      <div class="flex flex-col gap-2.5 text-white/18 text-[.78rem]">
+        <a href="https://www.linkedin.com/in/khaled-saieed-b10a40247/" target="_blank" class="hover:text-white/45 transition-colors">LinkedIn</a>
+        <a href="https://github.com/KhaledSaieed23" target="_blank" class="hover:text-white/45 transition-colors">GitHub</a>
+        <a href="https://www.youtube.com/@KhaledSaieedStudio" target="_blank" class="hover:text-white/45 transition-colors">YouTube</a>
+        <a href="mailto:khaledsaieed85@gmail.com" class="hover:text-white/45 transition-colors">Email</a>
+      </div>
+    </div>
+  </div>
+  <div class="pt-8 border-t border-white/[0.05] flex flex-col sm:flex-row justify-between items-center gap-3 text-white/13 text-xs">
+    <span>© 2026 NEXORA by Khaled Saieed. All rights reserved.</span>
+    <span>BIM Automation Platform — NEXORA</span>
+  </div>
+</div>
+</footer>
+
+
+<!-- ════════  CHATBOT  ════════ -->
+<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+  <div id="cpanel" class="w-[310px] rounded-2xl overflow-hidden shadow-2xl shadow-black/60 border border-white/[0.08]" style="background:#050610">
+    <div class="flex items-center justify-between px-4 py-3" style="background:linear-gradient(135deg,#1d4ed8,#2563eb)">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center text-sm">🤖</div>
+        <div><div class="font-bold text-[.8rem]">NEXORA Assistant</div><div class="flex items-center gap-1 text-[.62rem] text-white/60"><span class="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"></span>Online</div></div>
+      </div>
+      <button onclick="tc()" class="text-white/45 hover:text-white p-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    </div>
+    <div id="cmsgs" class="p-3.5 h-52 overflow-y-auto flex flex-col gap-2.5" style="scroll-behavior:smooth">
+      <div class="self-start max-w-[88%] bg-white/[0.06] border border-white/[0.06] rounded-xl rounded-tl-sm px-3 py-2 text-[.78rem] text-white/58 leading-relaxed">Hi! I'm the NEXORA assistant. Ask me about our tools, services, or book a demo 👋</div>
+    </div>
+    <div class="px-3 pb-2 flex gap-1.5 flex-wrap">
+      <button onclick="qr('What tools do you offer?')" class="text-[.65rem] px-2.5 py-1 rounded-full border border-blue-500/22 text-blue-400/70 hover:bg-blue-500/10 transition">Tools</button>
+      <button onclick="qr('How much does it cost?')" class="text-[.65rem] px-2.5 py-1 rounded-full border border-blue-500/22 text-blue-400/70 hover:bg-blue-500/10 transition">Pricing</button>
+      <button onclick="qr('Book a demo')" class="text-[.65rem] px-2.5 py-1 rounded-full border border-blue-500/22 text-blue-400/70 hover:bg-blue-500/10 transition">Book Demo</button>
+    </div>
+    <div class="border-t border-white/[0.05] p-3 flex gap-2">
+      <input id="cinp" type="text" placeholder="Ask anything..." class="flex-1 bg-white/[0.05] border border-white/[0.07] rounded-lg px-3 py-2 text-[.78rem] outline-none text-white placeholder-white/18" style="transition:border-color .2s" onfocus="this.style.borderColor='rgba(59,130,246,.4)'" onblur="this.style.borderColor='rgba(255,255,255,.07)'" onkeydown="if(event.key==='Enter')sm()">
+      <button onclick="sm()" class="bg-blue-600 hover:bg-blue-500 w-8 h-8 rounded-lg flex items-center justify-center transition shrink-0"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg></button>
+    </div>
+  </div>
+  <button onclick="tc()" class="w-13 h-13 bg-blue-600 hover:bg-blue-500 rounded-full flex items-center justify-center shadow-xl shadow-blue-600/35 transition-all hover:scale-105" style="width:52px;height:52px">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+  </button>
+</div>
+
+
+<script>
+// ── Canvas — HERO ONLY (20 pts, 25fps, pauses when hidden) ──
+(function(){
+  const canvas=document.getElementById('hc');
+  const hero=canvas.closest('section');
+  const ctx=canvas.getContext('2d');
+  let W,H,pts=[],last=0,raf;
+  const N=20,D=100,FPS=40; // 40ms = 25fps
+  function resize(){W=canvas.width=hero.offsetWidth;H=canvas.height=hero.offsetHeight}
+  resize();
+  window.addEventListener('resize',resize,{passive:true});
+  for(let i=0;i<N;i++) pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.2+.5});
+  function draw(ts){
+    raf=requestAnimationFrame(draw);
+    if(document.hidden||ts-last<FPS)return;
+    last=ts;
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<N;i++) for(let j=i+1;j<N;j++){
+      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.hypot(dx,dy);
+      if(d<D){ctx.strokeStyle=`rgba(59,130,246,${(1-d/D)*.15})`;ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke()}
+    }
+    pts.forEach(p=>{
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(99,130,246,.4)';ctx.fill();
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+    });
+  }
+  raf=requestAnimationFrame(draw);
+})();
+
+// ── Nav ──
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>40),{passive:true});
+
+// ── Mobile ──
+document.getElementById('mbtn').addEventListener('click',()=>document.getElementById('mob').classList.toggle('open'));
+function cm(){document.getElementById('mob').classList.remove('open')}
+
+// ── Flip card: click to lock/unlock ──
+document.querySelectorAll('.flip-scene').forEach(scene=>{
+  scene.addEventListener('click',()=>{
+    scene.classList.toggle('locked');
+  });
+});
+
+// ── Card spotlight only (no tilt, no cursor glow) ──
+document.querySelectorAll('.card,.fcard,.lab-card').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    c.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    c.style.setProperty('--my',(e.clientY-r.top)+'px');
+  },{passive:true});
+});
+
+// ── Reveal ──
+const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on')}),{threshold:.07,rootMargin:'0px 0px -25px 0px'});
+document.querySelectorAll('.r').forEach(el=>ro.observe(el));
+
+
+// ── Donut charts removed — stub kept for safety ──
+
+// ── Performance bar chart animation ──
+(function(){
+  const chart=document.getElementById('perf-chart');
+  if(!chart)return;
+  let fired=false;
+  const obs=new IntersectionObserver(entries=>{
+    if(fired||!entries[0].isIntersecting)return;
+    fired=true;
+    chart.querySelectorAll('.cbar').forEach(b=>{
+      const delay=+b.dataset.delay||0;
+      setTimeout(()=>{ b.style.width=b.dataset.w+'%'; },delay);
+    });
+    obs.disconnect();
+  },{threshold:.25});
+  obs.observe(chart);
+})();
+
+// ── Nav scrollspy ──
+(function(){
+  const sections=['nexora','suite','services','results','labs','engineering','about'];
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting)return;
+      const id=e.target.id;
+      document.querySelectorAll('.nav-lnk').forEach(a=>a.classList.remove('nav-active'));
+      const a=document.querySelector('[data-nav="'+id+'"]');
+      if(a)a.classList.add('nav-active');
+    });
+  },{rootMargin:'-60px 0px -50% 0px',threshold:0});
+  sections.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+})();
+
+// ── Suite scroll nav ──
+function scrollToSec(id,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const el=document.getElementById('sec-'+id);
+  if(!el)return;
+  const top=el.getBoundingClientRect().top+window.scrollY-145;
+  window.scrollTo({top,behavior:'smooth'});
+}
+// ── Suite scrollspy ──
+(function(){
+  const ids=['modeling','shopdrawing','data','audit','selection','qty'];
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting)return;
+      const id=e.target.id.replace('sec-','');
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      const btn=document.querySelector('[data-tab="'+id+'"]');
+      if(btn)btn.classList.add('active');
+    });
+  },{rootMargin:'-140px 0px -50% 0px',threshold:0});
+  ids.forEach(id=>{const el=document.getElementById('sec-'+id);if(el)obs.observe(el);});
+})();
+
+// ── Chatbot ──
+const cp=document.getElementById('cpanel'),cm2=document.getElementById('cmsgs');
+function tc(){cp.classList.toggle('open')}
+function am(t,u){
+  const d=document.createElement('div');
+  d.className=u?'self-end max-w-[88%] bg-blue-600 rounded-xl rounded-tr-sm px-3 py-2 text-[.78rem] leading-relaxed':'self-start max-w-[88%] bg-white/[0.06] border border-white/[0.06] rounded-xl rounded-tl-sm px-3 py-2 text-[.78rem] text-white/58 leading-relaxed';
+  d.textContent=t;cm2.appendChild(d);cm2.scrollTop=cm2.scrollHeight;
+}
+const br={
+  tool:'NEXORA Automation Suite has 5 categories: Modeling Automation, Documentation, Data Management, Audit & QC, and Quantity tools. 20+ tools total! Check the Suite section.',
+  price:'We offer custom project pricing, tool licenses, and consulting. Contact Khaled directly for a tailored quote.',
+  demo:'Book a free 30-min call via WhatsApp: +201068002614 or email khaledsaieed85@gmail.com',
+  revit:'Our Revit add-ins are built with C# and the Revit API — production-ready, not just scripts. Check the Suite section for the full list.',
+  default:'Great question! Reach out directly: WhatsApp +201068002614 or khaledsaieed85@gmail.com 🚀'
+};
+function gb(m){
+  const l=m.toLowerCase();
+  if(l.includes('tool')||l.includes('suite')||l.includes('add'))return br.tool;
+  if(l.includes('price')||l.includes('cost')||l.includes('pay'))return br.price;
+  if(l.includes('demo')||l.includes('call')||l.includes('book'))return br.demo;
+  if(l.includes('revit')||l.includes('dynamo'))return br.revit;
+  return br.default;
+}
+function sm(){const i=document.getElementById('cinp'),t=i.value.trim();if(!t)return;am(t,true);i.value='';setTimeout(()=>am(gb(t),false),550)}
+function qr(t){am(t,true);setTimeout(()=>am(gb(t),false),550)}
+</script>
+
+</body>
+</html>
