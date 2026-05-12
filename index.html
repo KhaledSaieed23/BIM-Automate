@@ -156,6 +156,68 @@ h1,h2,h3,h4,p,.tl-desc{text-wrap:balance}
 ::-webkit-scrollbar-track{background:#03040a}
 ::-webkit-scrollbar-thumb{background:rgba(59,130,246,.3);border-radius:999px}
 
+/* ══════════════════════════════════════
+   MOBILE  (≤ 640px)
+══════════════════════════════════════ */
+@media(max-width:640px){
+
+  /* ── Hero — shrink orbs so they don't overflow ── */
+  .orb1{width:260px;height:260px;left:-8%;top:-5%}
+  .orb2{width:200px;height:200px;right:-6%}
+  .orb3{width:150px;height:150px}
+  .hglow{width:320px;height:240px;filter:blur(32px)}
+
+  /* ── Section vertical padding ── */
+  section.py-28{padding-top:4.5rem;padding-bottom:4.5rem}
+
+  /* ── Results chart ── */
+  /* X-axis scale bar — hide on mobile (too cramped) */
+  #perf-chart > div:last-child{display:none}
+  /* Row label narrower */
+  .chart-rw > div:first-child{width:80px!important}
+  /* Percentage badge — hide on mobile */
+  .chart-rw > div:last-child{display:none}
+
+  /* ── R&D labs grid → single col ── */
+  .grid.grid-cols-1.md\\:grid-cols-2{grid-template-columns:1fr}
+
+  /* ── Flip card height ── */
+  .flip-card{height:200px}
+
+  /* ── Suite tab bar — smaller text ── */
+  .tab-btn{padding:.55rem .65rem;font-size:.68rem;gap:3px}
+  .tab-btn .tbn{font-size:.58rem}
+
+  /* ── fcard padding ── */
+  .fcard.p-8{padding:1.25rem}
+
+  /* ── Stat bar dividers — collapse to grid ── */
+  .sdv{display:none}
+
+  /* ── pbi row label — min-width reset ── */
+  .pbi-row-label{min-width:unset;width:100px;font-size:.7rem}
+
+  /* ── About / testimonials grid ── */
+  .grid.grid-cols-1.md\\:grid-cols-3,
+  .grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-3,
+  .grid.grid-cols-2.sm\\:grid-cols-3.lg\\:grid-cols-4{grid-template-columns:repeat(2,1fr)}
+
+  /* ── Footer grid ── */
+  .grid.grid-cols-2.sm\\:grid-cols-4{grid-template-columns:repeat(2,1fr)}
+
+  /* ── Chip — prevent overflow ── */
+  .chip{font-size:.6rem;letter-spacing:.06em;padding:3px 10px}
+
+  /* ── slabel lines shorter ── */
+  .slabel::before,.slabel::after{width:12px}
+
+  /* ── Section px ── */
+  section.px-6{padding-left:1rem;padding-right:1rem}
+
+  /* ── Portfolio CTA — no whitespace-nowrap overflow ── */
+  .whitespace-nowrap{white-space:normal}
+}
+
 /* ── Hero entrance animations ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
